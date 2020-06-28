@@ -1,6 +1,7 @@
 package com.nufront.skin;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -26,6 +27,7 @@ public class SkinManager {
     private static volatile SkinManager mInstance;
     private final String KEY = "key_resources_path";
     private final String TAG = "SkinManager";
+    private SharedPreferences sp;
     private WeakReference<Context> mWeakRefContext;
     private Resources mResources = null;
     private String mResourcesPackageName;//皮肤的包名
@@ -52,11 +54,34 @@ public class SkinManager {
      */
     public void init(Context ctx) {
         mWeakRefContext = new WeakReference<>(ctx);
+        sp = ctx.getSharedPreferences(TAG, Context.MODE_PRIVATE);
         Log.d(TAG, "用于初始化换肤管理器");
     }
 
     public String getLastResourcesPath(){
-        return PreferenceUtils.getString(mWeakRefContext.get(), KEY);
+        return getCache(KEY);
+    }
+
+    public void clearCache(){
+        saveCache(KEY, null);}
+    /**
+     * 从 缓存 里面读取配置信息
+     * @param key
+     * @return
+     */
+    private String getCache(String key){
+        return sp.getString(key, null);
+    }
+
+    /**
+     * 存储到缓存里面
+     * @param key
+     * @param value
+     */
+    private void saveCache(String key, String value){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(key, value);
+        edit.apply();
     }
 
     /**
@@ -90,12 +115,12 @@ public class SkinManager {
             mResourcesPath = skinPkgPath;
             Log.d(TAG, String.format("主题包路径：%s 包名：%s", mResourcesPath, mResourcesPackageName));
 
-            PreferenceUtils.putString(mWeakRefContext.get(), KEY, skinPkgPath);
+            saveCache(KEY, skinPkgPath);
             result = true;
         } catch (Exception e) {
 //            e.printStackTrace();
             Log.e(TAG, e.getMessage());
-            PreferenceUtils.putString(mWeakRefContext.get(), KEY, null);
+            clearCache();
             result = false;
         }
 

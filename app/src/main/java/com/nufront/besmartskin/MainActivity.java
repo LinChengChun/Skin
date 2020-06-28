@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             SkinManager.getInstance().init(MainActivity.this);
             String path = SkinManager.getInstance().getLastResourcesPath();
-            Log.e(TAG, "path = "+path);
             if(!TextUtils.isEmpty(path)){
                 SkinManager.getInstance().load(path);
                 skinFactory.apply();
