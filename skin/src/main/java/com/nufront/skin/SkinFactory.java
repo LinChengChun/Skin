@@ -192,9 +192,8 @@ public class SkinFactory implements LayoutInflater.Factory2 {
                         if (skinItem.getTypeName().contains("color")){
                             int trueColor = SkinManager.getInstance().getColor(skinItem.getResId());
                             view.setBackgroundColor(trueColor);
-                        }else if (skinItem.getTypeName().contains("drawable")){
-                            int resId = SkinManager.getInstance().getDrawableId(skinItem.getResId());
-                            view.setBackgroundResource(resId);
+                        }else if (skinItem.getTypeName().contains("drawable") || skinItem.getTypeName().contains("mipmap")){
+                            view.setBackground(SkinManager.getInstance().getDrawable(skinItem.getResId()));
                         }
                         break;
                     case "textColor":

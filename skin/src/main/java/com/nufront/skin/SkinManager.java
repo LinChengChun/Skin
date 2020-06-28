@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 public class SkinManager {
 
     private static volatile SkinManager mInstance;
+    private final String KEY = "key_resources_path";
     private final String TAG = "SkinManager";
     private WeakReference<Context> mWeakRefContext;
     private Resources mResources = null;
@@ -50,8 +51,12 @@ public class SkinManager {
      * @param ctx
      */
     public void init(Context ctx) {
-        mWeakRefContext = new WeakReference<Context>(ctx);
+        mWeakRefContext = new WeakReference<>(ctx);
         Log.d(TAG, "用于初始化换肤管理器");
+    }
+
+    public String getLastResourcesPath(){
+        return PreferenceUtils.getString(mWeakRefContext.get(), KEY);
     }
 
     /**
@@ -84,10 +89,13 @@ public class SkinManager {
 
             mResourcesPath = skinPkgPath;
             Log.d(TAG, String.format("主题包路径：%s 包名：%s", mResourcesPath, mResourcesPackageName));
+
+            PreferenceUtils.putString(mWeakRefContext.get(), KEY, skinPkgPath);
             result = true;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             Log.e(TAG, e.getMessage());
+            PreferenceUtils.putString(mWeakRefContext.get(), KEY, null);
             result = false;
         }
 
@@ -115,14 +123,14 @@ public class SkinManager {
         }
 
         String resName = originResources.getResourceEntryName(resId);
-        Log.e(TAG, "resName = "+resName);
         int trueResId = mResources.getIdentifier(resName, "color", mResourcesPackageName);
         int trueColor = 0;
 
         try {
             trueColor = mResources.getColor(trueResId);
         } catch (Resources.NotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             trueColor = originColor;
         }
 
@@ -131,13 +139,16 @@ public class SkinManager {
 
     public Drawable getDrawable(int resId) {
         Resources originResources = mWeakRefContext.get().getResources();
+        String resName = originResources.getResourceEntryName(resId);
+        String defType = originResources.getResourceTypeName(resId);
+//        String packageName = mWeakRefContext.get().getPackageName();
+
         Drawable originDrawable = originResources.getDrawable(resId);
         if (isResourcesEmpty()) {
             return originDrawable;
         }
-        String resName = originResources.getResourceEntryName(resId);
 
-        int trueResId = mResources.getIdentifier(resName, "drawable", mResourcesPackageName);
+        int trueResId = mResources.getIdentifier(resName, defType, mResourcesPackageName);
 
         Drawable trueDrawable = null;
         try {
@@ -147,7 +158,8 @@ public class SkinManager {
                 trueDrawable = mResources.getDrawable(trueResId, null);
             }
         } catch (Resources.NotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             trueDrawable = originDrawable;
         }
 

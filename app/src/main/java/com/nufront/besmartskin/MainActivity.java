@@ -1,18 +1,20 @@
 package com.nufront.besmartskin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.nufront.skin.SkinFactory;
 import com.nufront.skin.SkinManager;
 
 public class MainActivity extends AppCompatActivity {
-
+    private final String TAG = "MainActivity";
     private SkinFactory skinFactory = new SkinFactory();
 
     @Override
@@ -21,7 +23,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SkinManager.getInstance().init(this);
+        new Handler().postDelayed(() -> {
+            SkinManager.getInstance().init(MainActivity.this);
+            String path = SkinManager.getInstance().getLastResourcesPath();
+            Log.e(TAG, "path = "+path);
+            if(!TextUtils.isEmpty(path)){
+                SkinManager.getInstance().load(path);
+                skinFactory.apply();
+            }
+        }, 10);
 
     }
 
