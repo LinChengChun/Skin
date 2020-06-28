@@ -1,2 +1,4 @@
+include ':skinresource'
+include ':skin'
 include ':app'
 rootProject.name = "BeSmartSkin"
