@@ -1,4 +1,4 @@
-package com.nufront.skin;
+package com.besmart.skin;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -18,9 +18,7 @@ import java.util.List;
 
 /**
  * Created by LinChengChun on 2020/6/28.
- * Author Name: 林程淳
- * GitHub: https://github.com/LinChengChun
- * Package Name: com.nufront.skin
+ * Package Name: com.besmart.skin
  */
 public class SkinFactory implements LayoutInflater.Factory2 {
     private final String TAG = "SkinFactory";
@@ -172,7 +170,7 @@ public class SkinFactory implements LayoutInflater.Factory2 {
         }
     }
 
-    class SkinView {
+    private static class SkinView {
         View view;
         List<SkinItem> skinItems;
 

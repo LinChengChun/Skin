@@ -1,4 +1,4 @@
-package com.nufront.skinresource;
+package com.besmart.skin;
 
 import org.junit.Test;
 

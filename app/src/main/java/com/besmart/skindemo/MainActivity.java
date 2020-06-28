@@ -1,17 +1,17 @@
-package com.nufront.besmartskin;
+package com.besmart.skindemo;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.nufront.skin.SkinFactory;
-import com.nufront.skin.SkinManager;
+import com.besmart.skin.SkinFactory;
+import com.besmart.skin.SkinManager;
+
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";

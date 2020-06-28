@@ -1,4 +1,4 @@
-package com.nufront.skin;
+package com.besmart.skin;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,9 +15,7 @@ import java.lang.reflect.Method;
 
 /**
  * Created by LinChengChun on 2020/6/28.
- * Author Name: 林程淳
- * GitHub: https://github.com/LinChengChun
- * Package Name: com.nufront.skin
+ * Package Name: com.besmart.skin
  * 换肤思路：
  * 1.加载SD卡里面的主题包资源
  * 2.实现

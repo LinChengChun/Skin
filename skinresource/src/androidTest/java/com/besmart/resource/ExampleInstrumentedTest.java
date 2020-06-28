@@ -1,4 +1,4 @@
-package com.nufront.besmartskin;
+package com.besmart.resource;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.nufront.besmartskin", appContext.getPackageName());
+        assertEquals("com.besmart.skinresource", appContext.getPackageName());
     }
 }
